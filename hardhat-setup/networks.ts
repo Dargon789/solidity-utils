@@ -4,6 +4,18 @@ import { HardhatNetworkAccountsUserConfig, Network, NetworksUserConfig } from 'h
 
 /**
  * @category Hardhat-Setup
+ * Loads environment variables into process.env using the dotenv package.
+ * By default, loads variables from a `.env` file in the project root.
+ * You can provide custom options (e.g. a different path or encoding) via the `options` parameter.
+ * @param options Optional configuration object for dotenv (e.g. `{ path: '.env.local' }`).
+ * @see https://github.com/motdotla/dotenv#config
+ */
+export function loadEnv(options?: dotenv.DotenvConfigOptions): void {
+    dotenv.config(options);
+}
+
+/**
+ * @category Hardhat-Setup
  * Configuration type for managing Etherscan integration in Hardhat setups.
  * @param apiKey Dictionary of API keys for accessing Etherscan, indexed by network name.
  * @param customChains Array of custom blockchain network configurations.
@@ -72,8 +84,16 @@ export class Networks {
     networks: NetworksUserConfig = {};
     etherscan: Etherscan = { apiKey: {}, customChains: [] };
 
-    constructor(useHardhat: boolean = true, forkingNetworkName?: string, saveHardhatDeployments: boolean = false, forkingAccounts?: HardhatNetworkAccountsUserConfig) {
-        dotenv.config();
+    constructor(
+        useHardhat: boolean = true,
+        forkingNetworkName?: string,
+        saveHardhatDeployments: boolean = false,
+        forkingAccounts?: HardhatNetworkAccountsUserConfig,
+        autoLoadEnv: boolean = true
+    ) {
+        if (autoLoadEnv) {
+            loadEnv();
+        }
 
         if (useHardhat || forkingNetworkName) {
             this.networks.hardhat = {
@@ -88,7 +108,12 @@ export class Networks {
         }
 
         if (forkingNetworkName) {
-            const { url, authKeyHttpHeader } = parseRpcEnv(process.env[`${forkingNetworkName.toUpperCase()}_RPC_URL`] || '');
+            const forkRpcKey = `${forkingNetworkName.toUpperCase()}_RPC_URL`;
+            const forkRpcEnv = process.env[forkRpcKey];
+            if (!forkRpcEnv) {
+                throw new Error(`Missing required environment variable '${forkRpcKey}'. Did you forget to call loadEnv() or set autoLoadEnv to true?`);
+            }
+            const { url, authKeyHttpHeader } = parseRpcEnv(forkRpcEnv || '');
             this.networks.hardhat!.forking = {
                 url,
                 httpHeaders: authKeyHttpHeader ? { 'auth-key': authKeyHttpHeader } : undefined,
@@ -132,10 +157,7 @@ export class Networks {
         this.register('arbitrum', 42161, process.env.ARBITRUM_RPC_URL, process.env.ARBITRUM_PRIVATE_KEY || privateKey, 'arbitrumOne', process.env.ARBITRUM_ETHERSCAN_KEY);
         this.register('xdai', 100, process.env.XDAI_RPC_URL, process.env.XDAI_PRIVATE_KEY || privateKey, 'xdai', process.env.XDAI_ETHERSCAN_KEY);
         this.register('avax', 43114, process.env.AVAX_RPC_URL, process.env.AVAX_PRIVATE_KEY || privateKey, 'avalanche', process.env.AVAX_ETHERSCAN_KEY, 'paris');
-        this.register('fantom', 250, process.env.FANTOM_RPC_URL, process.env.FANTOM_PRIVATE_KEY || privateKey, 'opera', process.env.FANTOM_ETHERSCAN_KEY, 'paris');
-        this.register('aurora', 1313161554, process.env.AURORA_RPC_URL, process.env.AURORA_PRIVATE_KEY || privateKey, 'aurora', process.env.AURORA_ETHERSCAN_KEY);
         this.register('base', 8453, process.env.BASE_RPC_URL, process.env.BASE_PRIVATE_KEY || privateKey, 'base', process.env.BASE_ETHERSCAN_KEY);
-        this.registerCustom('klaytn', 8217, process.env.KLAYTN_RPC_URL, process.env.KLAYTN_PRIVATE_KEY || privateKey, process.env.KLAYTN_ETHERSCAN_KEY, 'https://scope.klaytn.com/', 'https://scope.klaytn.com/');
         this.registerCustom('linea', 59144, process.env.LINEA_RPC_URL, process.env.LINEA_PRIVATE_KEY || privateKey, process.env.LINEA_ETHERSCAN_KEY, 'https://api.lineascan.build/api', 'https://lineascan.build/', 'london');
         this.registerCustom('sonic', 146, process.env.SONIC_RPC_URL, process.env.SONIC_PRIVATE_KEY || privateKey, process.env.SONIC_ETHERSCAN_KEY, 'https://api.sonicscan.org/api', 'https://sonicscan.org/', 'shanghai');
         this.registerCustom('unichain', 130, process.env.UNICHAIN_RPC_URL, process.env.UNICHAIN_PRIVATE_KEY || privateKey, process.env.UNICHAIN_ETHERSCAN_KEY, 'https://api.uniscan.xyz/api', 'https://uniscan.xyz/', 'shanghai');
