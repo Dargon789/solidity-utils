@@ -48,7 +48,7 @@
     "chai": "4.5.0",
     "dotenv": "16.6.1",
     "ethereumjs-util": "7.1.5",
-    "ethers": "6.13.4",
+    "ethers": "6.15.0",
     "hardhat": "2.23.0",
     "hardhat-deploy": "0.14.0",
     "mocha-chai-jest-snapshot": "1.1.6",
