@@ -68,7 +68,7 @@
     "auto-changelog": "^2.5.0",
     "commander": "12.1.0",
     "create-ts-index": "1.14.0",
-    "eslint": "8.57.1",
+    "eslint": "9.26.0",
     "eslint-config-standard": "17.1.0",
     "eslint-plugin-import": "2.31.0",
     "eslint-plugin-n": "17.12.0",
