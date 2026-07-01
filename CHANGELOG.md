@@ -1,6 +1,113 @@
 Change Log
 ==========
 
+solidity-utils/6.9.8 (2026-06-10)
+---------------------------------
+
+- add contracts to export ([#263](https://github.com/1inch/solidity-utils/pull/263); [595baf5](https://github.com/1inch/solidity-utils/commit/595baf57ee4cb122919c314d4e91017466563bd2)).
+- Bump version to 6.9.8 and update handlebars dependency to 4.7.9 ([#247](https://github.com/1inch/solidity-utils/pull/247); [4adc76e](https://github.com/1inch/solidity-utils/commit/4adc76ed79fc5f2f0bd65a13cb6017788e1eb86d)).
+- Feature/safe transient ([#239](https://github.com/1inch/solidity-utils/pull/239); [4722927](https://github.com/1inch/solidity-utils/commit/47229275a5b796f7864c1379b7cd14eb6b1558fa)).
+
+solidity-utils/6.9.7 (2026-03-11)
+---------------------------------
+
+- use uniTransfer for rescueFunds ([#244](https://github.com/1inch/solidity-utils/pull/244); [29043f2](https://github.com/1inch/solidity-utils/commit/29043f22422fde454951e9733129cce5d67e6a39)).
+
+solidity-utils/6.9.6 (2026-03-10)
+---------------------------------
+
+- Feature/rescue funds ([#243](https://github.com/1inch/solidity-utils/pull/243); [81ad207](https://github.com/1inch/solidity-utils/commit/81ad207e52c1d43b8fe5ca8bdb876d108746f867)).
+- Bump immutable from 4.3.7 to 4.3.8 ([#240](https://github.com/1inch/solidity-utils/pull/240); [6a28e22](https://github.com/1inch/solidity-utils/commit/6a28e22f477ffdf4c611e6e405f51adaec0dd892)).
+- Bump lodash from 4.17.21 to 4.17.23 ([#225](https://github.com/1inch/solidity-utils/pull/225); [58c6a51](https://github.com/1inch/solidity-utils/commit/58c6a514e554764bfa6f5e99d8c335241427c030)).
+- Bump qs from 6.14.1 to 6.14.2 ([#231](https://github.com/1inch/solidity-utils/pull/231); [4efcfb8](https://github.com/1inch/solidity-utils/commit/4efcfb87923423198e0aa2dc64cf236cba0dd367)).
+- Bump minimatch from 10.1.1 to 10.2.3 ([#237](https://github.com/1inch/solidity-utils/pull/237); [b6a226b](https://github.com/1inch/solidity-utils/commit/b6a226b2404739545be076f257d251786e957e74)).
+
+solidity-utils/6.9.5 (2026-03-03)
+---------------------------------
+
+- fixed slices ([#238](https://github.com/1inch/solidity-utils/pull/238); [399012a](https://github.com/1inch/solidity-utils/commit/399012a1128b70c097fd954a336f53d32f4cd3a5)).
+
+solidity-utils/6.9.4 (2026-02-19)
+---------------------------------
+
+- added getEtherscanConfig() ([#232](https://github.com/1inch/solidity-utils/pull/232); [ec16739](https://github.com/1inch/solidity-utils/commit/ec16739eda44f88f85de9e2c626b519ed6a8f023)).
+
+solidity-utils/6.9.3 (2026-02-10)
+---------------------------------
+
+- [PT1-366] added cronos support ([#228](https://github.com/1inch/solidity-utils/pull/228); [e55abfe](https://github.com/1inch/solidity-utils/commit/e55abfe68c10404192d68f588ca6478bef617d94)).
+
+solidity-utils/6.9.2 (2026-01-02)
+---------------------------------
+
+- added write permissions to github publish ([#220](https://github.com/1inch/solidity-utils/pull/220); [38e5f8d](https://github.com/1inch/solidity-utils/commit/38e5f8de705a8821237520ae06f3e9b0d40daf01)).
+
+solidity-utils/6.9.1 (2026-01-02)
+---------------------------------
+
+- upgrade package version ([#219](https://github.com/1inch/solidity-utils/pull/219); [8eee225](https://github.com/1inch/solidity-utils/commit/8eee225b143935aeccfe6d9931fdb50585077012)).
+- Patch npm publish ([#218](https://github.com/1inch/solidity-utils/pull/218); [2196892](https://github.com/1inch/solidity-utils/commit/2196892a5a26000d6ffe346126fe31a50e5841c6)).
+
+solidity-utils/6.9.0 (2025-12-30)
+---------------------------------
+
+solidity-utils/6.8.2 (2026-01-02)
+---------------------------------
+
+- upgrade package version ([#219](https://github.com/1inch/solidity-utils/pull/219); [8eee225](https://github.com/1inch/solidity-utils/commit/8eee225b143935aeccfe6d9931fdb50585077012)).
+- Patch npm publish ([#218](https://github.com/1inch/solidity-utils/pull/218); [2196892](https://github.com/1inch/solidity-utils/commit/2196892a5a26000d6ffe346126fe31a50e5841c6)).
+
+solidity-utils/6.8.1 (2026-01-02)
+---------------------------------
+
+- fixed minimatch ([#217](https://github.com/1inch/solidity-utils/pull/217); [14ca632](https://github.com/1inch/solidity-utils/commit/14ca63241fc90285703b6e0ffeeac0d8a54346af)).
+- Update publish.yml ([#215](https://github.com/1inch/solidity-utils/pull/215); [58622f8](https://github.com/1inch/solidity-utils/commit/58622f88b431c2863025d93a27725ce21c01d98d)).
+- fixed files ([#216](https://github.com/1inch/solidity-utils/pull/216); [fd0a8a8](https://github.com/1inch/solidity-utils/commit/fd0a8a811e1765df139a410d55c6805810574cd2)).
+- fixed minimatch ([#214](https://github.com/1inch/solidity-utils/pull/214); [4c39619](https://github.com/1inch/solidity-utils/commit/4c396199a04025bd0bb3732917efc53f6dfa1f98)).
+- fixed publish ([#213](https://github.com/1inch/solidity-utils/pull/213); [1379dc5](https://github.com/1inch/solidity-utils/commit/1379dc5ca94a13892bd9714664abad25da06218a)).
+- added calldata, multicall, reentrancy, transient, simulator libs ([#212](https://github.com/1inch/solidity-utils/pull/212); [c5af922](https://github.com/1inch/solidity-utils/commit/c5af922d8e7fa2a728b6cd1b680888588da994c8)).
+
+solidity-utils/6.8.0 (2025-09-30)
+---------------------------------
+
+- [PT1-171] Register `zksync` network to use it without zksolc ([#206](https://github.com/1inch/solidity-utils/pull/206); [e1686b3](https://github.com/1inch/solidity-utils/commit/e1686b3cfc520303f5b741bf2223173e529bcee4)).
+
+solidity-utils/6.7.1 (2025-09-26)
+---------------------------------
+
+- [PT1-170] Add BaseSepolia network to default list in `registerAll()`  ([#203](https://github.com/1inch/solidity-utils/pull/203); [f0c0d3d](https://github.com/1inch/solidity-utils/commit/f0c0d3d0be448d6dcb02f8ccbb1b7ab4c1eb9e10)).
+- Bump `hardhat-verify` dep to version supports etherscan api v2 ([#204](https://github.com/1inch/solidity-utils/pull/204); [4a1b4b2](https://github.com/1inch/solidity-utils/commit/4a1b4b27f4d6f01afc8fbc482d6b3a4e6deaac71)).
+
+solidity-utils/6.7.0 (2025-09-19)
+---------------------------------
+
+- [PT1-153] Update hardhat config for Etherscan API v2 from deprecated v1 (env change required) ([#201](https://github.com/1inch/solidity-utils/pull/201); [2693fcd](https://github.com/1inch/solidity-utils/commit/2693fcd0ee43b5da7d5d2af591c829ddf12a51d5)).
+- [PT1-156] Remove deprecated networks: `fantom`, `aurora`, `klaytn` ([#200](https://github.com/1inch/solidity-utils/pull/200); [10927a4](https://github.com/1inch/solidity-utils/commit/10927a435353a2801d6a20339824d21ec9b461f0)).
+- Fix some minor typos in the comments ([#194](https://github.com/1inch/solidity-utils/pull/194); [1e01c53](https://github.com/1inch/solidity-utils/commit/1e01c53179aa55bee3cc9a06008e7ab88cf12739)).
+- Update natspec for AddressArray ([#191](https://github.com/1inch/solidity-utils/pull/191); [efddf5f](https://github.com/1inch/solidity-utils/commit/efddf5f25adf4e7fa48ef31a231fb5014e2f6bcf)).
+- Bump sha.js from 2.4.11 to 2.4.12 ([#198](https://github.com/1inch/solidity-utils/pull/198); [fbfa127](https://github.com/1inch/solidity-utils/commit/fbfa127cacca3366ecee046b3d93ef7c356f53ae)).
+- Bump form-data from 4.0.2 to 4.0.4 ([#196](https://github.com/1inch/solidity-utils/pull/196); [7374793](https://github.com/1inch/solidity-utils/commit/737479357cb079a6d46533bc65e41450c264ccc7)).
+- Bump pbkdf2 from 3.1.2 to 3.1.3 ([#192](https://github.com/1inch/solidity-utils/pull/192); [94611cc](https://github.com/1inch/solidity-utils/commit/94611cc4ddb6c7c55f9d20f3093074ecca5440ba)).
+- [SC-1504] Make `.env` loading optional with `autoLoadEnv` constructor flag ([#189](https://github.com/1inch/solidity-utils/pull/189); [35fb1b0](https://github.com/1inch/solidity-utils/commit/35fb1b006a0874bbcd4576a0b86dd3cee214194b)).
+
+solidity-utils/6.6.0 (2025-05-22)
+---------------------------------
+
+- [SC-1479] Normalize test accounts to empty code state ([#187](https://github.com/1inch/solidity-utils/pull/187); [948af77](https://github.com/1inch/solidity-utils/commit/948af77af88f103876f8895c0806a08167f97543)).
+
+solidity-utils/6.5.0 (2025-05-09)
+---------------------------------
+
+- [SC-1476] UNICHAIN network ([#186](https://github.com/1inch/solidity-utils/pull/186); [a3fd025](https://github.com/1inch/solidity-utils/commit/a3fd0259863d0c094cc52c1de99920d1f7d0012c)).
+- [SC-1475] SONIC network ([#185](https://github.com/1inch/solidity-utils/pull/185); [e2ad631](https://github.com/1inch/solidity-utils/commit/e2ad631f9e5c551f32bb3237a19333c5fd0a1dd4)).
+
+solidity-utils/6.4.1 (2025-05-06)
+---------------------------------
+
+- [SC-1466] Fix dependabot issues ([#183](https://github.com/1inch/solidity-utils/pull/183); [02cff08](https://github.com/1inch/solidity-utils/commit/02cff08e5a95a4041f36f351624f3d5747b98336)).
+- [SC-1454] Remove temporary chains patch ([#181](https://github.com/1inch/solidity-utils/pull/181); [38c5fea](https://github.com/1inch/solidity-utils/commit/38c5fea51d0ca666e0588096a5053fc7c2553fcf)).
+- Fix release ci ([#180](https://github.com/1inch/solidity-utils/pull/180); [5c21acc](https://github.com/1inch/solidity-utils/commit/5c21acc6f6a910935e2e4a5028a152adcf45a559)).
+
 solidity-utils/6.4.0 (2025-02-03)
 ---------------------------------
 
@@ -71,11 +178,11 @@ solidity-utils/5.2.1 (2024-08-05)
 
 - [SC-1220] Fix dependabot issues ([#150](https://github.com/1inch/solidity-utils/pull/150); [b4d9f4e](https://github.com/1inch/solidity-utils/commit/b4d9f4e04b6570f7e42a1077e7b3335f8a755734)).
 - Fix comment in ECDSA.sol ([#149](https://github.com/1inch/solidity-utils/pull/149); [1d237c3](https://github.com/1inch/solidity-utils/commit/1d237c3882909d003119a21df7ec7daf8aad5f9a)).
-- Fix/types for build ([#148](https://github.com/1inch/solidity-utils/pull/148); [3f9eb9b](https://github.com/1inch/solidity-utils/commit/3f9eb9bdec4b440e63ef8fcdd03898f360d406fe)).
 
-solidity-utils/5.2.0 (2024-07-03)
+solidity-utils/5.2.0 (2024-07-04)
 ---------------------------------
 
+- Fix/types for build ([#148](https://github.com/1inch/solidity-utils/pull/148); [3f9eb9b](https://github.com/1inch/solidity-utils/commit/3f9eb9bdec4b440e63ef8fcdd03898f360d406fe)).
 - [SC-1177] Deploy with create3 and save deployment ([#147](https://github.com/1inch/solidity-utils/pull/147); [2e247c2](https://github.com/1inch/solidity-utils/commit/2e247c223b313ddf2757a98e8fcbd707102a4995)).
 
 solidity-utils/5.1.0 (2024-06-06)
@@ -224,7 +331,7 @@ solidity-utils/3.0.1 (2023-07-26)
 
 - Fixed package building ([#92](https://github.com/1inch/solidity-utils/pull/92); [34886f1](https://github.com/1inch/solidity-utils/commit/34886f19209ca922b09668ccd7f7f78068f8e9a0)).
 
-solidity-utils/3.0.0 (2023-07-12)
+solidity-utils/3.0.0 (2023-07-13)
 ---------------------------------
 
 - Migrate to new hardhat-ethers ([#89](https://github.com/1inch/solidity-utils/pull/89); [a6fc5ee](https://github.com/1inch/solidity-utils/commit/a6fc5eedc8f837e71533263458f35d3770a79180)).
