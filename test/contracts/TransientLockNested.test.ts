@@ -1,63 +1,74 @@
-import { expect } from '../../src/expect';
-import { executionGas } from '../../src/profileEVM';
-import { loadFixture } from '@nomicfoundation/hardhat-network-helpers';
-import hre, { ethers } from 'hardhat';
+import { ethers, loadFixture } from '../../src/hardhatHelpers.js';
+import { expect } from '../../src/expect.js';
 
 const MAKER = '0x1111111111111111111111111111111111111111';
 const STRATEGY = ethers.id('strategy-1');
+const OTHER_MAKER = '0x2222222222222222222222222222222222222222';
+const OTHER_STRATEGY = ethers.id('strategy-2');
 
-describe('TransientLock nested mapping', function () {
-    async function deployNestedMocks() {
-        const safe = await (await ethers.getContractFactory('TransientLockNestedMock')).deploy();
-        const unsafe = await (await ethers.getContractFactory('TransientLockUnsafeNestedMock')).deploy();
-        return { safe, unsafe };
+describe('TransientLockNestedMock', function () {
+    async function deployMock() {
+        const mock = await (await ethers.getContractFactory('TransientLockNestedMock')).deploy();
+        return { mock };
     }
 
-    describe('TransientLockLib (with offset)', function () {
-        it('should lock successfully', async function () {
-            const { safe } = await loadFixture(deployNestedMocks);
-            await expect(safe.lock(MAKER, STRATEGY)).not.to.be.reverted;
-        });
-
-        it('should return false initially', async function () {
-            const { safe } = await loadFixture(deployNestedMocks);
-            expect(await safe.isLocked(MAKER, STRATEGY)).to.equal(false);
-        });
-
-        it('should reset between transactions', async function () {
-            const { safe } = await loadFixture(deployNestedMocks);
-            await safe.lock(MAKER, STRATEGY);
-            expect(await safe.isLocked(MAKER, STRATEGY)).to.equal(false);
-        });
-
-        it('should isolate different maker/strategy pairs', async function () {
-            const { safe } = await loadFixture(deployNestedMocks);
-            const otherMaker = '0x2222222222222222222222222222222222222222';
-            const otherStrategy = ethers.id('strategy-2');
-            await safe.lock(MAKER, STRATEGY);
-            expect(await safe.isLocked(otherMaker, STRATEGY)).to.equal(false);
-            expect(await safe.isLocked(MAKER, otherStrategy)).to.equal(false);
-        });
+    it('should return false initially', async function () {
+        const { mock } = await loadFixture(deployMock);
+        expect(await mock.isLocked(MAKER, STRATEGY)).to.equal(false);
     });
 
-    describe('TransientLockUnsafeLib (without offset)', function () {
-        it('should lock successfully', async function () {
-            const { unsafe } = await loadFixture(deployNestedMocks);
-            await expect(unsafe.lock(MAKER, STRATEGY)).not.to.be.reverted;
-        });
+    it('should isolate and update multiple maker/strategy pairs', async function () {
+        const { mock } = await loadFixture(deployMock);
+        const results = await mock.multicall.staticCall([
+            mock.interface.encodeFunctionData('isLocked', [MAKER, STRATEGY]),
+            mock.interface.encodeFunctionData('lock', [MAKER, STRATEGY]),
+            mock.interface.encodeFunctionData('isLocked', [MAKER, STRATEGY]),
+            mock.interface.encodeFunctionData('isLocked', [OTHER_MAKER, OTHER_STRATEGY]),
+            mock.interface.encodeFunctionData('lock', [OTHER_MAKER, OTHER_STRATEGY]),
+            mock.interface.encodeFunctionData('isLocked', [MAKER, STRATEGY]),
+            mock.interface.encodeFunctionData('isLocked', [OTHER_MAKER, OTHER_STRATEGY]),
+            mock.interface.encodeFunctionData('unlock', [MAKER, STRATEGY]),
+            mock.interface.encodeFunctionData('isLocked', [MAKER, STRATEGY]),
+            mock.interface.encodeFunctionData('isLocked', [OTHER_MAKER, OTHER_STRATEGY]),
+            mock.interface.encodeFunctionData('unlock', [OTHER_MAKER, OTHER_STRATEGY]),
+            mock.interface.encodeFunctionData('isLocked', [OTHER_MAKER, OTHER_STRATEGY]),
+        ]);
+
+        expect(mock.interface.decodeFunctionResult('isLocked', results[0])[0]).to.equal(false);
+        expect(mock.interface.decodeFunctionResult('isLocked', results[2])[0]).to.equal(true);
+        expect(mock.interface.decodeFunctionResult('isLocked', results[3])[0]).to.equal(false);
+        expect(mock.interface.decodeFunctionResult('isLocked', results[5])[0]).to.equal(true);
+        expect(mock.interface.decodeFunctionResult('isLocked', results[6])[0]).to.equal(true);
+        expect(mock.interface.decodeFunctionResult('isLocked', results[8])[0]).to.equal(false);
+        expect(mock.interface.decodeFunctionResult('isLocked', results[9])[0]).to.equal(true);
+        expect(mock.interface.decodeFunctionResult('isLocked', results[11])[0]).to.equal(false);
     });
 
-    describe('Gas comparison: TransientLockLib vs TransientLockUnsafeLib (nested mapping)', function () {
-        before(function () {
-            if (hre.__SOLIDITY_COVERAGE_RUNNING) { this.skip(); }
-        });
+    it('should revert when locking the same pair twice', async function () {
+        const { mock } = await loadFixture(deployMock);
+        const lock = mock.interface.encodeFunctionData('lock', [MAKER, STRATEGY]);
 
-        it('lock', async function () {
-            const { safe, unsafe } = await loadFixture(deployNestedMocks);
-            const safeGas = await executionGas(ethers.provider, safe.lock(MAKER, STRATEGY));
-            const unsafeGas = await executionGas(ethers.provider, unsafe.lock(MAKER, STRATEGY));
-            console.log(`        lock — safe: ${safeGas}, unsafe: ${unsafeGas}, delta: ${safeGas - unsafeGas}`);
-            expect(safeGas).to.be.gte(unsafeGas);
-        });
+        await expect(mock.multicall([lock, lock])).to.be.revertedWithCustomError(mock, 'UnexpectedLock');
+    });
+
+    it('should revert when unlocking a different pair', async function () {
+        const { mock } = await loadFixture(deployMock);
+        const calls = [
+            mock.interface.encodeFunctionData('lock', [MAKER, STRATEGY]),
+            mock.interface.encodeFunctionData('unlock', [OTHER_MAKER, OTHER_STRATEGY]),
+        ];
+
+        await expect(mock.multicall(calls)).to.revert(ethers);
+    });
+
+    it('should reset all lock states between transactions', async function () {
+        const { mock } = await loadFixture(deployMock);
+        await mock.multicall([
+            mock.interface.encodeFunctionData('lock', [MAKER, STRATEGY]),
+            mock.interface.encodeFunctionData('lock', [OTHER_MAKER, OTHER_STRATEGY]),
+        ]);
+
+        expect(await mock.isLocked(MAKER, STRATEGY)).to.equal(false);
+        expect(await mock.isLocked(OTHER_MAKER, OTHER_STRATEGY)).to.equal(false);
     });
 });

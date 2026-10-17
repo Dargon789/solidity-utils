@@ -1,9 +1,11 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.30;
 
-import "../../libraries/TransientLock.sol";
+pragma solidity ^0.8.27;
 
-contract TransientLockMock {
+import { TransientLock, TransientLockLib } from "../../libraries/TransientLock.sol";
+import { ResultMulticallMock } from "./ResultMulticallMock.sol";
+
+contract TransientLockMock is ResultMulticallMock {
     using TransientLockLib for TransientLock;
 
     TransientLock private _lock;
@@ -18,25 +20,5 @@ contract TransientLockMock {
 
     function isLocked() external view returns (bool) {
         return _lock.isLocked();
-    }
-
-    function lockAndCheck() external returns (bool) {
-        _lock.lock();
-        return _lock.isLocked();
-    }
-
-    function lockUnlockAndCheck() external returns (bool) {
-        _lock.lock();
-        _lock.unlock();
-        return _lock.isLocked();
-    }
-
-    function doubleLock() external {
-        _lock.lock();
-        _lock.lock();
-    }
-
-    function unlockWithoutLock() external {
-        _lock.unlock();
     }
 }

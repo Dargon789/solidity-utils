@@ -1,9 +1,11 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.30;
 
-import "../../libraries/TransientLock.sol";
+pragma solidity ^0.8.27;
 
-contract TransientLockNestedMock {
+import { TransientLock, TransientLockLib } from "../../libraries/TransientLock.sol";
+import { ResultMulticallMock } from "./ResultMulticallMock.sol";
+
+contract TransientLockNestedMock is ResultMulticallMock {
     using TransientLockLib for TransientLock;
 
     mapping(address maker => mapping(bytes32 strategyHash => TransientLock)) internal _reentrancyLocks;
@@ -19,5 +21,4 @@ contract TransientLockNestedMock {
     function isLocked(address maker, bytes32 strategyHash) external view returns (bool) {
         return _reentrancyLocks[maker][strategyHash].isLocked();
     }
-
 }
